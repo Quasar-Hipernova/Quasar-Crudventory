@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercado Hogar</title>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!--Icons-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+
+        <!-- LOGO -->
+        <img src="img/logo.webp" alt="logo" id="logo">
+        <a class="navbar-brand fw-bold text-primary" href="#">
+        Mercado Hogar
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- MENU -->
+        <div class="collapse navbar-collapse" id="menu">
+
+      <!-- LINKS -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link" href="#">Categorías</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Contacto</a>
+            </li>
+          </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn position-relative">
+        <i class="fa-solid fa-cart-shopping"></i>
+        </button>
+        <a href="#" class="btn btn-outline-primary">
+          Login
+        </a>
+
+      </div>
+
+      </div>
+    </div>
+</nav>
+
+
+<section class="hero">
+  <div class="container">
+    <h1>Todo lo que tu hogar necesita en un solo lugar</h1>
+  </div>
+</section>
+
+<!-- SECCIÓN -->
+<div class="container my-5">
+  <h4 class="mb-4 text-center">Categorías</h4>
+
+  <div class="row justify-content-center text-center">
+    
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
+        <i class="fa-solid fa-broom fa-3x mb-3"></i>
+        <h6 class="mb-0">Aseo y Hogar</h6>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
+        <i class="fa-solid fa-carrot fa-3x mb-3"></i>
+        <h6 class="mb-0">Verduras</h6>
+      </div>
+    </div>
+    
+
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
+        <i class="fa-solid fa-bread-slice fa-3x mb-3"></i>
+        <h6 class="mb-0">Despensa</h6>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
+        <i class="fa-solid fa-bacon fa-3x mb-3"></i>
+        <h6 class="mb-0">Pollo y Carnes</h6>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- carrusel -->
+  <div class="container my-5">
+  <h4 class="mb-4 text-center">Ofertas destacadas</h4>
+
+  <div id="productsCarousel" class="carousel slide" data-bs-ride="carousel">
+    
+    <div class="carousel-inner" id="contenedor-carrusel">
+      </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#productsCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#productsCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-dark rounded-circle"></span>
+    </button>
+
+  </div> </div>
+
+  <!-- carrusel  Aseo-->
+  <div class="container my-5">
+  <h4 class="mb-4 text-center">Aseo y Hogar</h4>
+
+  <div id="productsCarousel" class="carousel slide" data-bs-ride="carousel">
+    
+    <div class="carousel-inner" id="contenedorAseo">
+      </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#productsCarousel" data-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#productsCarousel" data-slide="next">
+      <span class="carousel-control-next-icon bg-dark rounded-circle"></span>
+    </button>
+
+  </div> </div>
+
+
+
+<div class="row g-4">
+    <h4 class="mb-4 text-center">Verduras</h4>
+    <!-- CARD -->
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/arepa_promo.png" class="card-img-top img-fluid p-2" alt="Producto">
+        <div class="card-body text-center">
+          <h6 class="card-title">AREPA MINITELA BLANCA </h6>
+          <p class="fw-bold">$1.000</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/crema_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">CREMA DE LECHE</h6>
+          <p class="fw-bold">$2.000</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/spaghetti_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">SPAGHETTI</h6>
+          <p class="fw-bold">$3.990</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/tocineta_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">TOCINETA AHUMADA</h6>
+          <p class="fw-bold">$6.600</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GRID -->
+  <div class="row g-4">
+    <h4 class="mb-4 text-center">Despensa</h4>
+    <!-- CARD -->
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/arepa_promo.png" class="card-img-top img-fluid p-2" alt="Producto">
+        <div class="card-body text-center">
+          <h6 class="card-title">AREPA MINITELA BLANCA </h6>
+          <p class="fw-bold">$1.000</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/crema_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">CREMA DE LECHE</h6>
+          <p class="fw-bold">$2.000</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/spaghetti_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">SPAGHETTI</h6>
+          <p class="fw-bold">$3.990</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/tocineta_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">TOCINETA AHUMADA</h6>
+          <p class="fw-bold">$6.600</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row g-4">
+    <h4 class="mb-4 text-center">Pollo y Carnes</h4>
+    <!-- CARD -->
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/arepa_promo.png" class="card-img-top img-fluid p-2" alt="Producto">
+        <div class="card-body text-center">
+          <h6 class="card-title">AREPA MINITELA BLANCA </h6>
+          <p class="fw-bold">$1.000</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/crema_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">CREMA DE LECHE</h6>
+          <p class="fw-bold">$2.000</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/spaghetti_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">SPAGHETTI</h6>
+          <p class="fw-bold">$3.990</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card product-card h-100">
+        <img src="img/tocineta_promo.png" class="card-img-top">
+        <div class="card-body text-center">
+          <h6 class="card-title">TOCINETA AHUMADA</h6>
+          <p class="fw-bold">$6.600</p>
+          <button class="btn btn-danger w-100">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="script.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
