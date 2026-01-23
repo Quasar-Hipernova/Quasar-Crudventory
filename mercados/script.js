@@ -1,4 +1,4 @@
-// DATOS DE PRODUCTOS
+
 const listaProductos = [
     {
         nombre: "Aguardiente",
@@ -129,8 +129,86 @@ const listaProductos = [
         img: "img/img-verduras/pimenton-fruver-12005183-01.png",
     },
     ];
+    const listaDespensa = [
+    {
+        nombre: "Aceite Girasol",
+        precio: "$18.000",
+        img: "img/img-despensa/aceite-de-girasol-don-olio-900-ml-01.png",
+    },
+    { 
+        nombre: "Arepa", 
+        precio: "$1.000", 
+        img: "img/img-despensa/arepa_promo.png" },
+    { 
+        nombre: "Atún", 
+        precio: "$4.400", 
+        img: "img/img-despensa/atun-en-agua-carlo-forte-170-g-neto-01.png" },
+    {
+        nombre: "Sal",
+        precio: "$2.500",
+        img: "img/img-despensa/caldo-de-gallina-condimentos-12002946-1.png",
+    },
+    {
+        nombre: "Chorizo",
+        precio: "$7.000",
+        img: "img/img-despensa/chorizo-antioqueno-viande-225g-01.png",
+    },
+    { 
+        nombre: "Crema de Leche", 
+        precio: "$2.900", 
+        img: "img/img-despensa/crema_promo.png" },
+    {
+        nombre: "Spaghetti",
+        precio: "$4.600",
+        img: "img/img-despensa/spaghetti_promo.png",
+    },
+    {
+        nombre: "Tocineta",
+        precio: "$11.500",
+        img: "img/img-despensa/tocineta_promo.png",
+    },
+    ];
+    
+    const listaPollo = [
+        {
+        nombre: "Alitas Sin Costillal",
+        precio: "$12.000",
+        img: "img/img-pollo/alas-sin-costillar-pollo-fiesta-x-800-g-01.png",
+    },
+    { 
+        nombre: "Alitas BBQ", 
+        precio: "$19.500", 
+        img: "img/img-pollo/alitas-de-pollo-bbq-brasset-900-g-01.png" },
+    { 
+        nombre: "Carne Molida Cerdo", 
+        precio: "$14.400", 
+        img: "img/img-pollo/carne-molida-de-cerdo-500g-01.png" },
+    {
+        nombre: "Milanesa de Cerdo",
+        precio: "$22.500",
+        img: "img/img-pollo/milanesa-de-cerdo-red-cut-500-gr-01.png",
+    },
+    {
+        nombre: "Milanesa de Res",
+        precio: "$17.000",
+        img: "img/img-pollo/molida-de-res-95-5-red-cut-500g-01.png",
+    },
+    { 
+        nombre: "Muslos de Pollo", 
+        precio: "$7.900", 
+        img: "img/img-pollo/muslos-de-pollo-brasset-700-g-01.png" },
+    {
+        nombre: "Pinchos de Pollo",
+        precio: "$14.200",
+        img: "img/img-pollo/pinchos-de-pollo-apanado-brasset-4-und---200-g-01.png",
+    },
+    {
+        nombre: "Recorte de Pollo",
+        precio: "$7.500",
+        img: "img/img-pollo/surtida-de-pollo-marinada-500g-01.png",
+    },
+    ];
 
-// FUNCIÓN ÚNICA PARA RENDERIZAR CUALQUIER CARRUSEL
 function renderizarCarrusel(lista, idContenedor) {
 const contenedor = document.getElementById(idContenedor);
   if (!contenedor) return;
@@ -178,4 +256,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderizarCarrusel(listaProductos, "contenedor-destacados");
   renderizarCarrusel(listaAseo, "contenedor-aseo");
   renderizarCarrusel(listaVerduras, "contenedor-verduras");
+  renderizarCarrusel(listaDespensa, "contenedor-despensa");
+  renderizarCarrusel(listaPollo, "contenedor-pollo");
 });
