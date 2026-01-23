@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* Navbar */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+}
+
+.navbar {
+  padding: 20px;
+  background: #0D47A1;
+  height: 70px;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo h2 {
+  color: #FBC02D;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fdfdfd;
+  font-size: 16px;
+}
+
+.nav-links a:hover {
+  color: #000;
+  font-weight: 300;
+}
+
+/* Acciones */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.login {
+  text-decoration: none;
+  color: #d1cfcf;
+  font-size: 16px;
+}
+
+.login:hover {
+  color: #0383fc;
+  font-weight: 300;
+}
+
+.btn-signup {
+  background: #0383fc;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+/* Hero */
+.hero {
+  width: 100%;
+  height: 50vh; /* altura del hero */
+  background-image: url("./img/ChatGPT\ Image\ 22\ ene\ 2026\,\ 17_26_15.png"); /* tu imagen */
+  background-size: cover;      /* ajusta sin deformar */
+  background-position: center; /* centra la imagen */
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+.hero-img {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  width: 100%;
+  margin-right: 30rem;
+  margin: 2rem;
+  
+  
+  
+
+}
+.btn {
+  padding: 12px 30px;
+  background: #4674f5;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-left: 15%;
+  
+  
+}
+
+/* Categorías */
+.categories {
+  padding: 40px 20px;
+  background: #fff;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 100px;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.category-card {
+  width: 150px;
+  height: 100px;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.category-card img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+  object-fit: contain;
+}
+
+.category-card span {
+  font-size: 13px;
+  color: #000;
+}
+
+/* Carrusel */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+}
+
+.promo {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 20px auto 30px;
+  text-align: center;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  margin: 30px 0;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.carousel-track {
+  margin-bottom: 100px;
+  display: flex;
+  gap: 20px;
+  transition: transform 0.4s ease;
+}
+
+.card {
+  flex: 0 0 calc((100% - 80px) / 3); /* aprox 5 visibles, ajusta según necesites */
+  height: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #b3b2ae;
+}
+
+.card img {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Flechas */
+.carousel .prev,
+.carousel .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel .prev {
+  left: 10px;
+}
+
+.carousel .next {
+  right: 10px;
+}
+
+/* Ocultar elementos vacíos que puedan causar espacio extra */
+.div:empty,
+.container > .card:empty,
+div.card:empty {
+  display: none;
+}
