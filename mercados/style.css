@@ -1,44 +1,107 @@
+/* VARIABLES DE COLOR */
+:root {
+    --primary-blue: #1E9BEF;
+    --hover-blue: #0d6efd;
+    --bg-gray: #f8f9fa;
+    --text-dark: #333;
+}
+
 body {
-    background-color: #f5f5f5;
+    background-color: var(--bg-gray);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-dark);
 }
 
-.hero {
-    background-color: #1E9BEF;
-    padding: 3rem 1rem;
-    text-align: center;
+/* HERO SECTION */
+.hero-section {
+    padding: 60px 0;
+    margin-bottom: 40px;
 }
 
-.hero h1 {
-    font-weight: bold;
-    color: #eaeaea;
-}
-
-.product-card img {
-    height: 160px;
-    object-fit: cover;
-    background: #eaeaea;
-}
-
-#logo {
-    height: 100px;
-    width: 100px;
-    border-radius: 100%;
-}
-
-#categoria{
-    display: grid;
+/* CATEGORÍAS CIRCULARES */
+.cat-circle {
+    width: 85px;
+    height: 85px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #eee;
+}
+
+.cat-circle:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+/* TARJETAS DE PRODUCTO */
+.product-card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.product-card:hover {
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08) !important;
+    transform: translateY(-5px);
 }
 
 .product-card img {
-    height: 200px;      
-    width: 100%;       
-    object-fit: contain; /* muestra la imagen completa dentro del espacio */
-    padding: 15px;      
-    background-color: #fff; /
+    height: 180px;
+    object-fit: contain;
+    padding: 15px;
+    border-radius: 15px 15px 0 0;
 }
-/* tarjetas  */
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    filter: invert(1) grayscale(100);
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    height: 40px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+/* PRECIOS */
+.text-decoration-line-through {
+    font-size: 0.85rem;
+    color: #999 !important;
+}
+
+.price-tag {
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+}
+
+/* BOTONES */
+.btn-primary {
+    background-color: var(--primary-blue);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: 600;
+}
+
+/* CONTROLES CARRUSEL */
+.carousel-control-prev, .carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    width: 45px;
+    height: 45px;
+    background-size: 50%;
+    filter: invert(1);
+}
+
+/* FOOTER */
+footer {
+    border-top: 5px solid var(--primary-blue);
 }

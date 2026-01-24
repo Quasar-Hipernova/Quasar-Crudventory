@@ -1,121 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mercado Hogar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Hogar | Tu Supermercado Online</title>
 
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<!--Icons-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
-
-        <!-- LOGO -->
-        <img src="img/logo.webp" alt="logo" id="logo">
-        <a class="navbar-brand fw-bold text-primary" href="#">
-        Mercado Hogar
+        <a class="navbar-brand fw-bold d-flex align-items-center text-primary" href="#">
+            <img src="img/logo.webp" alt="logo" id="logo" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            Mercado Hogar
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-        <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- MENU -->
         <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link fw-semibold" href="#">Categorías</a></li>
+                <li class="nav-item"><a class="nav-link fw-semibold" href="#">Ofertas</a></li>
+                <li class="nav-item"><a class="nav-link fw-semibold" href="#">Contacto</a></li>
+            </ul>
 
-      <!-- LINKS -->
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-            <a class="nav-link" href="#">Categorías</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Contacto</a>
-            </li>
-          </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-          <button class="btn btn-outline-primary" type="submit">Search</button>
-        </form>
-      <div class="d-flex align-items-center gap-3">
-        <button class="btn position-relative">
-        <i class="fa-solid fa-cart-shopping"></i>
-        </button>
-        <a href="#" class="btn btn-outline-primary">
-          Login
-        </a>
+            <form class="d-flex w-50 mx-lg-4" role="search">
+                <div class="input-group">
+                    <input class="form-control border-primary" type="search" placeholder="¿Qué producto buscas hoy?" aria-label="Search">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
 
-      </div>
-
-      </div>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-light position-relative rounded-circle shadow-sm">
+                    <i class="fa-solid fa-cart-shopping text-primary"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        3
+                    </span>
+                </button>
+                <a href="#" class="btn btn-outline-primary rounded-pill px-4">Login</a>
+            </div>
+        </div>
     </div>
 </nav>
 
-
-<section class="hero">
-  <div class="container">
-    <h1>Todo lo que tu hogar necesita en un solo lugar</h1>
-  </div>
+<section class="hero-section py-5 mb-5" style="background: linear-gradient(135deg, #1E9BEF 0%, #0d6efd 100%); color: white;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <span class="badge bg-warning text-dark mb-3 fw-bold">OFERTAS DE INAUGURACIÓN</span>
+                <h1 class="display-4 fw-bold">¡Frescura y Calidad en cada entrega!</h1>
+                <p class="lead mb-4">Haz tu mercado desde casa y recíbelo en minutos. Los mejores precios garantizados.</p>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-lg text-primary fw-bold rounded-pill px-5 shadow">Comprar ya</button>
+                    <button class="btn btn-outline-light btn-lg rounded-pill px-4">Ver folleto</button>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1000" class="img-fluid rounded-4 shadow-lg" alt="Canasta de mercado">
+            </div>
+        </div>
+    </div>
 </section>
 
-<!-- SECCIÓN -->
 <div class="container my-5">
-  <h4 class="mb-4 text-center">Categorías</h4>
-
-  <div class="row justify-content-center text-center">
-    
-    <div class="col-lg-3 col-md-6 col-6 mb-3">
-      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
-        <i class="fa-solid fa-broom fa-3x mb-3"></i>
-        <h6 class="mb-0">Aseo y Hogar</h6>
-      </div>
+    <h4 class="fw-bold mb-4 text-center text-center">Compra por Categoría</h4>
+    <div class="row g-4 text-center justify-content-center">
+        <div class="col-6 col-md-3 col-lg-2">
+            <div class="category-item">
+                <div class="cat-circle shadow-sm mb-2"><i class="fa-solid fa-broom text-primary"></i></div>
+                <h6 class="fw-bold">Aseo</h6>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <div class="category-item">
+                <div class="cat-circle shadow-sm mb-2"><i class="fa-solid fa-carrot text-success"></i></div>
+                <h6 class="fw-bold">Fruver</h6>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <div class="category-item">
+                <div class="cat-circle shadow-sm mb-2"><i class="fa-solid fa-bread-slice text-warning"></i></div>
+                <h6 class="fw-bold">Despensa</h6>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+            <div class="category-item">
+                <div class="cat-circle shadow-sm mb-2"><i class="fa-solid fa-bacon text-danger"></i></div>
+                <h6 class="fw-bold">Carnes</h6>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="col-lg-3 col-md-6 col-6 mb-3">
-      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
-        <i class="fa-solid fa-carrot fa-3x mb-3"></i>
-        <h6 class="mb-0">Verduras</h6>
-      </div>
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold m-0"><i class="fa-solid fa-star text-warning me-2"></i>Ofertas Destacadas</h4>
+        <a href="#" class="text-primary text-decoration-none fw-bold">Ver todo <i class="fa-solid fa-chevron-right"></i></a>
     </div>
-    
-
-    <div class="col-lg-3 col-md-6 col-6 mb-3">
-      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
-        <i class="fa-solid fa-bread-slice fa-3x mb-3"></i>
-        <h6 class="mb-0">Despensa</h6>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-6 mb-3">
-      <div class="card product-card h-100 p-4 d-flex flex-column align-items-center justify-content-center">
-        <i class="fa-solid fa-bacon fa-3x mb-3"></i>
-        <h6 class="mb-0">Pollo y Carnes</h6>
-      </div>
-    </div>
-
-  </div>
-  </div>
-  <!-- carruseles  -->
-  <div class="container my-5">
-    <h4 class="mb-4 text-center">Ofertas Destacadas</h4>
     <div id="carouselDestacados" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" id="contenedor-destacados"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselDestacados" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
+            <span class="carousel-control-prev-icon bg-dark rounded-circle shadow"></span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselDestacados" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-dark rounded-circle"></span>
+            <span class="carousel-control-next-icon bg-dark rounded-circle shadow"></span>
         </button>
     </div>
 </div>
 
 <div class="container my-5">
-    <h4 class="mb-4 text-center">Aseo y Hogar</h4>
+    <h4 class="fw-bold mb-4 text-start">Aseo</h4>
     <div id="carouselAseo" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" id="contenedor-aseo"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselAseo" data-bs-slide="prev">
@@ -128,7 +130,7 @@
 </div>
 
 <div class="container my-5">
-    <h4 class="mb-4 text-center">Verduras Frescas</h4>
+    <h4 class="fw-bold mb-4 text-start">Fruver</h4>
     <div id="carouselVerduras" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" id="contenedor-verduras"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselVerduras" data-bs-slide="prev">
@@ -141,7 +143,7 @@
 </div>
 
 <div class="container my-5">
-    <h4 class="mb-4 text-center">Despensa</h4>
+    <h4 class="fw-bold mb-4 text-start">Despensa</h4>
     <div id="carouselDespensa" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" id="contenedor-despensa"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselDespensa" data-bs-slide="prev">
@@ -154,7 +156,7 @@
 </div>
 
 <div class="container my-5">
-    <h4 class="mb-4 text-center">Pollo y Carnes</h4>
+    <h4 class="fw-bold mb-4 text-start">Pollo y Carnes</h4>
     <div id="carouselPollo" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" id="contenedor-pollo"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselPollo" data-bs-slide="prev">
@@ -165,65 +167,38 @@
         </button>
     </div>
 </div>
-<!-- footer -->
- <footer class="text-center bg-body-tertiary">
-  <!-- Grid container -->
-  <div class="container pt-4">
-    <!-- Section: Social media -->
-    <section class="mb-4">
-      <!-- Facebook -->
-      <a
-        data-mdb-ripple-init
-        class="btn btn-link btn-floating btn-lg text-body m-1"
-        href="https://www.facebook.com/?locale=es_LA"
-        role="button"
-        data-mdb-ripple-color="dark"
-        ><i class="fab fa-facebook-f"></i
-      ></a>
 
-      <!-- Twitter -->
-      <a
-        data-mdb-ripple-init
-        class="btn btn-link btn-floating btn-lg text-body m-1"
-        href="https://x.com/?lang=es"
-        role="button"
-        data-mdb-ripple-color="dark"
-        ><i class="fab fa-twitter"></i
-      ></a>
-
-
-      <!-- Instagram -->
-      <a
-        data-mdb-ripple-init
-        class="btn btn-link btn-floating btn-lg text-body m-1"
-        href="https://www.instagram.com/"
-        role="button"
-        data-mdb-ripple-color="dark"
-        ><i class="fab fa-instagram"></i
-      ></a>
-
-      <!-- Github -->
-      <a
-        data-mdb-ripple-init
-        class="btn btn-link btn-floating btn-lg text-body m-1"
-        href="https://github.com/robinson-riwi"
-        role="button"
-        data-mdb-ripple-color="dark"
-        ><i class="fab fa-github"></i
-      ></a>
-    </section>
-    <!-- Section: Social media -->
-  </div>
-
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2026 Copyright:
-    Quasar
-  </div>
-  <!-- Copyright -->
+<footer class="bg-dark text-white pt-5 pb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3 text-primary">Mercado Hogar</h5>
+                <p class="text-secondary small">Somos tu supermercado de confianza, llevando frescura y calidad a tu hogar desde 2026.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">Síguenos</h5>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white fs-4"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white fs-4"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white fs-4"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">Newsletter</h5>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Tu email">
+                    <button class="btn btn-primary">Unirse</button>
+                </div>
+            </div>
+        </div>
+        <hr class="bg-secondary">
+        <div class="text-center small text-secondary">
+            &copy; 2026 Copyright: Mercado Hogar - Quasar
+        </div>
+    </div>
 </footer>
+
 <script src="script.js"></script>
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
