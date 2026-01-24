@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Super Admin",
+      "username": "admin",
+      "pass": "1234",
+      "role": "admin",
+      "avatar": "bi-person-circle"
+    },
+    {
+      "id": 2,
+      "name": "Cliente Demo",
+      "username": "user",
+      "pass": "1234",
+      "role": "user",
+      "avatar": "bi-emoji-smile"
+    },
+    {
+      "name": "luis",
+      "username": "luis22",
+      "pass": "1234",
+      "role": "user",
+      "avatar": "bi-person",
+      "id": 1769185951003
+    },
+    {
+      "name": "Juan",
+      "username": "juan1",
+      "pass": "1234",
+      "role": "user",
+      "avatar": "bi-person",
+      "id": 1769209406591
+    },
+    {
+      "name": "pruebas",
+      "username": "prueba2",
+      "pass": "4321",
+      "role": "admin",
+      "avatar": "bi-person-circle",
+      "id": 1769214543486
+    }
+  ],
+  "products": [
+    {
+      "id": 101,
+      "name": "Camiseta Quasar",
+      "price": "25000",
+      "state": "publicado",
+      "img": "https://via.placeholder.com/150/FF8C00/FFFFFF?text=Quasar",
+      "desc": "Edición limitada."
+    }
+  ]
+}

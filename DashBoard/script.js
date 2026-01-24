@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════════════════════
-// script.js - Dashboard QUASAR
+// script.js - Dashboard QUASAR (Refactorizado con DB.js)
 // ════════════════════════════════════════════════════════════════════════════════
 
 // ────────────────────────────────────────────────
@@ -10,156 +10,104 @@ const sidebar = document.getElementById('sidebar');
 const mainContent = document.querySelector('.main-content');
 const btnLogout = document.getElementById('btnLogout');
 
-// Variables específicas para la sección de listing
-let productTable;
-let searchInput;
-let categorySelect;
-let statusSelect;
-let priceSelect;
-let perPageSelect;
-let addProductBtn;
+// ────────────────────────────────────────────────
+// INICIALIZACIÓN
+// ────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Dashboard QUASAR inicializado');
 
-// Datos de productos (extraídos de la tabla HTML para manipulación dinámica)
-let products = [];
+    // Inicializar funcionalidades UI
+    initSidebarToggle();
+    initSubmenus();
+    initLogout();
 
-// Datos para tickets
-let tickets = [];
+    // Iniciar con el Dashboard
+    mostrarSeccion('dashboard');
+    updateMainContentMargin();
+});
 
 // ────────────────────────────────────────────────
-// TOGGLE SIDEBAR (Menú hamburguesa)
+// TOGGLE SIDEBAR (UI)
 // ────────────────────────────────────────────────
 function initSidebarToggle() {
     if (!toggleBtn || !sidebar || !mainContent) return;
 
     toggleBtn.addEventListener('click', () => {
         sidebar.classList.toggle('collapsed');
-        
-        // Para móviles: mostrar/ocultar completamente la sidebar
-        if (window.innerWidth < 992) {
-            sidebar.classList.toggle('show');
-        }
-
-        // Ajustar margen del contenido principal
+        if (window.innerWidth < 992) sidebar.classList.toggle('show');
         updateMainContentMargin();
     });
 
-    // Cerrar sidebar en móviles al hacer clic fuera
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth < 992 && 
-            sidebar.classList.contains('show') && 
-            !sidebar.contains(e.target) && 
-            e.target !== toggleBtn && 
-            !toggleBtn.contains(e.target)) {
-            sidebar.classList.remove('show');
-        }
-    });
-
-    // Ajustar al cambiar tamaño de ventana (responsive)
+    // Responsive stuff
     window.addEventListener('resize', () => {
-        if (window.innerWidth >= 992 && sidebar.classList.contains('show')) {
-            sidebar.classList.remove('show');
-        }
+        if (window.innerWidth >= 992 && sidebar.classList.contains('show')) sidebar.classList.remove('show');
         updateMainContentMargin();
     });
 }
 
 function updateMainContentMargin() {
     if (!mainContent || !sidebar) return;
-    
     const isCollapsed = sidebar.classList.contains('collapsed');
-    mainContent.style.marginLeft = isCollapsed 
-        ? 'var(--sidebar-collapsed-width, 70px)' 
-        : 'var(--sidebar-width, 250px)';
+    mainContent.style.marginLeft = isCollapsed ? 'var(--sidebar-collapsed-width, 70px)' : 'var(--sidebar-width, 250px)';
 }
 
 // ────────────────────────────────────────────────
-// GESTIÓN DE SUBMENÚS (Products, Users, Support)
+// NAVEGACIÓN Y SECCIONES
 // ────────────────────────────────────────────────
 function initSubmenus() {
-    // Obtener todos los items con submenú
     const submenuItems = document.querySelectorAll('.nav-item.has-submenu > a');
-
     submenuItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const parentLi = this.parentElement;
             const submenuId = this.getAttribute('data-bs-target');
             const submenu = document.querySelector(submenuId);
             const chevron = this.querySelector('.bi-chevron-down');
-
-            if (!submenu) return;
-
-            // Toggle del submenú
-            const isExpanded = submenu.classList.contains('show');
             
-            // Cerrar otros submenús (opcional, para comportamiento acordeón)
-            closeAllSubmenus(submenu);
-
-            // Abrir/cerrar el submenú actual
-            if (isExpanded) {
+            if (submenu.classList.contains('show')) {
                 submenu.classList.remove('show');
                 chevron?.classList.remove('rotate');
-                parentLi.classList.remove('submenu-open');
             } else {
+                // Cerrar otros
+                document.querySelectorAll('.collapse.show').forEach(s => s.classList.remove('show'));
                 submenu.classList.add('show');
                 chevron?.classList.add('rotate');
-                parentLi.classList.add('submenu-open');
             }
         });
     });
 }
 
-function closeAllSubmenus(except = null) {
-    const allSubmenus = document.querySelectorAll('.nav-item.has-submenu ul.collapse');
-    
-    allSubmenus.forEach(submenu => {
-        if (submenu !== except) {
-            submenu.classList.remove('show');
-            
-            // Remover rotación del chevron
-            const parentLink = submenu.closest('.has-submenu').querySelector('a');
-            const chevron = parentLink?.querySelector('.bi-chevron-down');
-            chevron?.classList.remove('rotate');
-            submenu.closest('.has-submenu')?.classList.remove('submenu-open');
-        }
-    });
-}
-
-// ────────────────────────────────────────────────
-// CAMBIO DE SECCIONES (Navegación entre vistas)
-// ────────────────────────────────────────────────
+// Función Central de Navegación
 function mostrarSeccion(seccionId, params = {}) {
-    // Ocultar todas las secciones
-    const allSections = document.querySelectorAll('.section-content');
-    allSections.forEach(section => {
-        section.classList.add('d-none');
-    });
+    // 1. Ocultar todo
+    document.querySelectorAll('.section-content').forEach(el => el.classList.add('d-none'));
+    
+    // 2. Mostrar seleccionado
+    const target = document.getElementById(seccionId);
+    if (target) target.classList.remove('d-none');
 
-    // Mostrar la sección solicitada
-    const targetSection = document.getElementById(seccionId);
-    if (targetSection) {
-        targetSection.classList.remove('d-none');
-        
-        // Lógica específica por sección
-        if (seccionId === 'add') {
-            initAddProductForm(params);
-        } else if (seccionId === 'pdetails') {
+    // 3. Cargar datos específicos (Lazy Loading)
+    switch(seccionId) {
+        case 'listing':
+            initListingSection(); // Carga productos desde DB
+            break;
+        case 'add':
+            initAddProductForm(params); // Prepara formulario (crear o editar)
+            break;
+        case 'pdetails':
             loadProductDetails(params.productId);
-        } else if (seccionId === 'newTicket') {
-            initNewTicketForm();
-        } else if (seccionId === 'ticket') {
+            break;
+        case 'udetails':
+            initUserSection(); // Carga usuarios desde DB
+            break;
+        case 'ticket':
             renderTickets();
-        }
-    } else {
-        console.warn(`Sección con ID "${seccionId}" no encontrada`);
-        return;
+            break;
+        case 'newTicket':
+            initNewTicketForm();
+            break;
     }
 
-    // Actualizar estado activo en el menú
-    updateActiveMenuItem(seccionId);
-
-    // Cerrar sidebar en móviles después de seleccionar
+    // 4. UI Ajustes (Móvil)
     if (window.innerWidth < 992 && sidebar?.classList.contains('show')) {
         sidebar.classList.remove('show');
     }
@@ -170,428 +118,357 @@ function mostrarSeccion(seccionId, params = {}) {
 // ────────────────────────────────────────────────
 function initLogout() {
     if (!btnLogout) return;
-
-    btnLogout.addEventListener('click', handleLogout);
+    btnLogout.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('¿Cerrar sesión?')) {
+            // Usamos la función de tu db.js
+            DB.logout();
+        }
+    });
 }
 
-function handleLogout(e) {
-    e.preventDefault();
+// ════════════════════════════════════════════════════════════════════════════════
+// LÓGICA DE PRODUCTOS (Corregida para usar DB.js y arreglar el bug de edición)
+// ════════════════════════════════════════════════════════════════════════════════
 
-    // Confirmación antes de cerrar sesión
-    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-        // Limpiar datos de sesión
-        sessionStorage.removeItem('admin');
-        sessionStorage.clear();
-        
-        // Opcional: limpiar localStorage si lo usas
-        // localStorage.clear();
+async function initListingSection() {
+    const tbody = document.querySelector('#listing .table tbody');
+    const searchInput = document.querySelector('#listing input[type="text"]');
+    const addBtn = document.querySelector('#listing .btn-danger');
 
-        // Redirigir al login
-        window.location.href = '../Login/login.html';
-    }
-}
+    if (!tbody) return;
 
-// ────────────────────────────────────────────────
-// INICIALIZACIÓN ESPECÍFICA PARA LISTING
-// ────────────────────────────────────────────────
-function initListingSection() {
-    productTable = document.querySelector('#listing .table tbody');
-    searchInput = document.querySelector('#listing input[type="text"]');
-    categorySelect = document.querySelector('#listing select:nth-of-type(1)');
-    statusSelect = document.querySelector('#listing select:nth-of-type(2)');
-    priceSelect = document.querySelector('#listing select:nth-of-type(3)');
-    perPageSelect = document.querySelector('#listing select:nth-of-type(4)');
-    addProductBtn = document.querySelector('#listing .btn-danger');
+    // 1. Obtener datos reales de la DB
+    const products = await DB.get('products');
+    
+    // 2. Renderizar tabla
+    renderProductTable(products, tbody);
 
-    if (!productTable || !searchInput || !categorySelect || !statusSelect || !priceSelect || !addProductBtn) return;
-
-    // Extraer datos iniciales de la tabla a un array
-    loadProductsFromTable();
-
-    // Evento para búsqueda
-    searchInput.addEventListener('input', applyFilters);
-
-    // Eventos para filtros
-    categorySelect.addEventListener('change', applyFilters);
-    statusSelect.addEventListener('change', applyFilters);
-    priceSelect.addEventListener('change', applyFilters);
-    perPageSelect.addEventListener('change', applyFilters); // Aunque no hay paginación, limitará los resultados visibles
-
-    // Botón Add Product
-    addProductBtn.addEventListener('click', () => {
+    // 3. Configurar botón añadir
+    // Clonamos el botón para eliminar event listeners viejos y evitar duplicados
+    const newAddBtn = addBtn.cloneNode(true);
+    addBtn.parentNode.replaceChild(newAddBtn, addBtn);
+    
+    newAddBtn.addEventListener('click', () => {
         mostrarSeccion('add', { mode: 'add' });
     });
 
-    // Inicializar acciones (ojo, lápiz, basura)
-    initTableActions();
-}
-
-function loadProductsFromTable() {
-    products = [];
-    const rows = productTable.querySelectorAll('tr');
-    rows.forEach((row, index) => {
-        const cells = row.querySelectorAll('td');
-        if (cells.length > 0) {
-            products.push({
-                id: index + 1,
-                name: cells[1].querySelector('.product-name').textContent.trim(),
-                category: cells[2].textContent.trim(),
-                stock: parseInt(cells[3].textContent.trim()),
-                price: parseFloat(cells[4].textContent.trim().replace('$', '')),
-                status: cells[5].querySelector('span').textContent.trim(),
-                published: cells[6].querySelector('div:first-child').textContent.trim(),
-                publishedTime: cells[6].querySelector('.text-muted').textContent.trim()
-            });
-        }
+    // 4. Configurar búsqueda simple
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+        renderProductTable(filtered, tbody);
     });
 }
 
-function applyFilters() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const category = categorySelect.value;
-    const status = statusSelect.value;
-    const priceRange = priceSelect.value;
-    const perPage = parseInt(perPageSelect.value) || 8;
-
-    let filteredProducts = products.filter(product => {
-        const matchesSearch = product.name.toLowerCase().includes(searchTerm);
-        const matchesCategory = (category === 'Category' || category === product.category);
-        const matchesStatus = (status === 'Status' || status === product.status);
-        let matchesPrice = true;
-        if (priceRange !== 'Price Range') {
-            if (priceRange === '$0 - $50') {
-                matchesPrice = product.price >= 0 && product.price <= 50;
-            } else if (priceRange === '$50 - $100') {
-                matchesPrice = product.price > 50 && product.price <= 100;
-            } else if (priceRange === '$100+') {
-                matchesPrice = product.price > 100;
-            }
-        }
-        return matchesSearch && matchesCategory && matchesStatus && matchesPrice;
-    });
-
-    // Limitar por página (aunque no hay paginación completa, solo mostramos los primeros N)
-    filteredProducts = filteredProducts.slice(0, perPage);
-
-    renderTable(filteredProducts);
-}
-
-function renderTable(filteredProducts) {
-    productTable.innerHTML = '';
-    filteredProducts.forEach(product => {
+function renderProductTable(products, tbody) {
+    tbody.innerHTML = '';
+    products.forEach(p => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${product.id}</td>
-            <td><div class="product-name">${product.name}</div></td>
-            <td>${product.category}</td>
-            <td>${product.stock}</td>
-            <td>$${product.price.toFixed(2)}</td>
-            <td><span class="badge-${product.status.toLowerCase().replace(' ', '-') || 'published'}">${product.status}</span></td>
+            <td>${p.id}</td>
+            <td><div class="product-name fw-bold">${p.name}</div></td>
+            <td>${p.category || 'General'}</td>
+            <td>${p.stock || 0}</td>
+            <td>$${p.price}</td>
+            <td><span class="badge ${p.state === 'publicado' ? 'bg-success' : 'bg-warning'}">${p.state}</span></td>
+            <td>${p.published || '-'}</td>
             <td>
-                <div>${product.published}</div>
-                <div class="text-muted" style="font-size: 0.75rem;">${product.publishedTime}</div>
-            </td>
-            <td>
-                <button class="action-btn view-btn" data-id="${product.id}" title="details"><i class="bi bi-eye"></i></button>
-                <button class="action-btn edit-btn" data-id="${product.id}" title="Edit"><i class="bi bi-pencil"></i></button>
-                <button class="action-btn delete-btn" data-id="${product.id}" title="Delete"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-light border" onclick="mostrarSeccion('pdetails', {productId: ${p.id}})"><i class="bi bi-eye"></i></button>
+                <button class="btn btn-sm btn-warning" onclick="mostrarSeccion('add', {mode: 'edit', productId: ${p.id}})"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-danger delete-prod-btn" data-id="${p.id}"><i class="bi bi-trash"></i></button>
             </td>
         `;
-        productTable.appendChild(row);
+        tbody.appendChild(row);
     });
 
-    // Re-inicializar acciones después de renderizar
-    initTableActions();
-}
-
-function initTableActions() {
-    // View (ojo)
-    document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const productId = parseInt(btn.dataset.id);
-            mostrarSeccion('pdetails', { productId });
-        });
-    });
-
-    // Edit (lápiz)
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const productId = parseInt(btn.dataset.id);
-            mostrarSeccion('add', { mode: 'edit', productId });
-        });
-    });
-
-    // Delete (basura)
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const productId = parseInt(btn.dataset.id);
-            if (confirm('¿Estás seguro de eliminar este producto?')) {
-                products = products.filter(p => p.id !== productId);
-                // Re-asignar IDs para mantener consistencia
-                products.forEach((p, index) => { p.id = index + 1; });
-                applyFilters();
+    // Agregar eventos delete
+    document.querySelectorAll('.delete-prod-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if(confirm('¿Borrar producto?')) {
+                await DB.delete('products', btn.dataset.id);
+                initListingSection(); // Recargar tabla
             }
         });
     });
 }
 
-// ────────────────────────────────────────────────
-// FUNCIONES PARA ADD/EDIT PRODUCT (Sección 'add')
-// ────────────────────────────────────────────────
-function initAddProductForm(params) {
-    const addSection = document.getElementById('add');
-    if (!addSection) return;
+// FORMULARIO DE PRODUCTOS (Crear y Editar)
+async function initAddProductForm(params) {
+    const container = document.getElementById('add');
+    const isEdit = params.mode === 'edit';
+    let productData = {};
 
-    // Si el formulario no existe, crearlo dinámicamente (ya que en HTML es placeholder)
-    if (!addSection.querySelector('form')) {
-        addSection.innerHTML = `
-            <h2>${params.mode === 'edit' ? 'Edit Product' : 'Add Product'}</h2>
-            <form id="product-form">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" required>
+    // Si es edición, buscar datos
+    if (isEdit) {
+        const products = await DB.get('products');
+        productData = products.find(p => p.id == params.productId) || {};
+    }
+
+    // Inyectar HTML del formulario
+    container.innerHTML = `
+        <h2 class="mb-4">${isEdit ? 'Editar Producto' : 'Nuevo Producto'}</h2>
+        <form id="dynamic-product-form" class="card p-4 shadow-sm">
+            <input type="hidden" id="prodId" value="${isEdit ? productData.id : ''}">
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" id="prodName" class="form-control" value="${productData.name || ''}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
-                    <select class="form-select" id="category" required>
-                        <option>Electronics</option>
-                        <option>Home & Office</option>
-                        <option>Fashion</option>
-                        <option>Fitness</option>
-                        <option>Gaming</option>
-                        <option>Furniture</option>
-                        <option>Toys</option>
+                <div class="col-md-6">
+                    <label class="form-label">Categoría</label>
+                    <select id="prodCategory" class="form-select">
+                        <option>Electronics</option><option>Fashion</option><option>Home</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="stock" class="form-label">Stock</label>
-                    <input type="number" class="form-control" id="stock" required>
+                <div class="col-md-4">
+                    <label class="form-label">Precio</label>
+                    <input type="number" id="prodPrice" class="form-control" value="${productData.price || ''}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number" step="0.01" class="form-control" id="price" required>
+                <div class="col-md-4">
+                    <label class="form-label">Stock</label>
+                    <input type="number" id="prodStock" class="form-control" value="${productData.stock || 0}">
                 </div>
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select class="form-select" id="status" required>
-                        <option>Published</option>
-                        <option>Pending</option>
-                        <option>Out of Stock</option>
+                <div class="col-md-4">
+                    <label class="form-label">Estado</label>
+                    <select id="prodState" class="form-select">
+                        <option value="publicado" ${productData.state === 'publicado' ? 'selected' : ''}>Publicado</option>
+                        <option value="borrador" ${productData.state === 'borrador' ? 'selected' : ''}>Borrador</option>
+                        <option value="agotado" ${productData.state === 'agotado' ? 'selected' : ''}>Agotado</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="published" class="form-label">Published Date</label>
-                    <input type="date" class="form-control" id="published" required>
+                <div class="col-12">
+                    <label class="form-label">URL Imagen</label>
+                    <input type="text" id="prodImg" class="form-control" value="${productData.img || ''}" placeholder="https://...">
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" onclick="mostrarSeccion('listing')">Cancel</button>
-            </form>
-        `;
-    }
+                <div class="col-12">
+                    <label class="form-label">Descripción</label>
+                    <textarea id="prodDesc" class="form-control" rows="3">${productData.desc || ''}</textarea>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                <button type="button" class="btn btn-secondary px-4" onclick="mostrarSeccion('listing')">Cancelar</button>
+            </div>
+        </form>
+    `;
 
-    const form = document.getElementById('product-form');
-    if (!form) return;
+    // Manejar Submit
+    document.getElementById('dynamic-product-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const id = document.getElementById('prodId').value; // Recuperamos el ID oculto
+        const data = {
+            name: document.getElementById('prodName').value,
+            category: document.getElementById('prodCategory').value,
+            price: document.getElementById('prodPrice').value,
+            stock: document.getElementById('prodStock').value,
+            state: document.getElementById('prodState').value,
+            img: document.getElementById('prodImg').value || 'https://via.placeholder.com/150',
+            desc: document.getElementById('prodDesc').value,
+            published: new Date().toLocaleDateString()
+        };
 
-    // Limpiar evento submit previo si existe
-    form.removeEventListener('submit', handleProductSubmit);
-    
-    // Cargar datos si es edición
-    if (params.mode === 'edit' && params.productId) {
-        const product = products.find(p => p.id === params.productId);
-        if (product) {
-            form.querySelector('#name').value = product.name;
-            form.querySelector('#category').value = product.category;
-            form.querySelector('#stock').value = product.stock;
-            form.querySelector('#price').value = product.price;
-            form.querySelector('#status').value = product.status;
-            form.querySelector('#published').value = product.published.split(', ').reverse().join('-'); // Convertir a YYYY-MM-DD
+        if (id) {
+            // Si hay ID, es ACTUALIZACIÓN (Fix del bug)
+            await DB.update('products', id, data);
+        } else {
+            // Si no hay ID, es CREACIÓN
+            await DB.insert('products', data);
         }
-    } else {
-        form.reset();
-    }
 
-    // Evento submit
-    form.addEventListener('submit', (e) => handleProductSubmit(e, params));
+        mostrarSeccion('listing'); // Volver al listado
+    });
 }
 
-function handleProductSubmit(e, params) {
-    e.preventDefault();
-    const form = e.target;
+async function loadProductDetails(id) {
+    const container = document.getElementById('pdetails');
+    const products = await DB.get('products');
+    const p = products.find(prod => prod.id == id);
 
-    const newProduct = {
-        name: form.querySelector('#name').value,
-        category: form.querySelector('#category').value,
-        stock: parseInt(form.querySelector('#stock').value),
-        price: parseFloat(form.querySelector('#price').value),
-        status: form.querySelector('#status').value,
-        published: new Date(form.querySelector('#published').value).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
-        publishedTime: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase().replace(' ', '')
-    };
+    if(!p) return;
 
-    if (params.mode === 'edit' && params.productId) {
-        const index = products.findIndex(p => p.id === params.productId);
-        if (index !== -1) {
-            newProduct.id = params.productId;
-            products[index] = newProduct;
-        }
-    } else {
-        newProduct.id = products.length + 1;
-        products.push(newProduct);
-    }
-
-    // Volver a listing y refrescar tabla
-    mostrarSeccion('listing');
-    applyFilters();
-}
-
-// ────────────────────────────────────────────────
-// FUNCIONES PARA PRODUCT DETAILS (Sección 'pdetails')
-// ────────────────────────────────────────────────
-function loadProductDetails(productId) {
-    const detailsSection = document.getElementById('pdetails');
-    if (!detailsSection) return;
-
-    const product = products.find(p => p.id === productId);
-    if (!product) {
-        detailsSection.innerHTML = '<h2>Product Not Found</h2>';
-        return;
-    }
-
-    // Renderizar detalles (reemplazar placeholder)
-    detailsSection.innerHTML = `
-        <h2>Product Details: ${product.name}</h2>
-        <div class="card">
-            <div class="card-body">
-                <p><strong>Category:</strong> ${product.category}</p>
-                <p><strong>Stock:</strong> ${product.stock}</p>
-                <p><strong>Price:</strong> $${product.price.toFixed(2)}</p>
-                <p><strong>Status:</strong> ${product.status}</p>
-                <p><strong>Published:</strong> ${product.published} at ${product.publishedTime}</p>
+    container.innerHTML = `
+        <h2>Detalles: ${p.name}</h2>
+        <div class="card p-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="${p.img}" class="img-fluid rounded">
+                </div>
+                <div class="col-md-8">
+                    <h4>${p.name} <span class="badge bg-secondary">${p.state}</span></h4>
+                    <h3 class="text-success">$${p.price}</h3>
+                    <p>${p.desc}</p>
+                    <hr>
+                    <p><strong>Stock:</strong> ${p.stock}</p>
+                    <p><strong>Categoría:</strong> ${p.category}</p>
+                </div>
             </div>
         </div>
-        <button class="btn btn-secondary mt-3" onclick="mostrarSeccion('listing')">Back to Listing</button>
+        <button class="btn btn-secondary mt-3" onclick="mostrarSeccion('listing')">Volver</button>
     `;
 }
 
-// ────────────────────────────────────────────────
-// FUNCIONES PARA NEW TICKET
-// ────────────────────────────────────────────────
-function initNewTicketForm() {
-    const form = document.getElementById('ticket-form');
-    if (!form) return;
 
-    // Limpiar evento submit previo si existe
-    form.removeEventListener('submit', handleTicketSubmit);
+// ════════════════════════════════════════════════════════════════════════════════
+// LÓGICA DE USUARIOS (NUEVO CRUD)
+// ════════════════════════════════════════════════════════════════════════════════
 
-    // Resetear formulario
-    form.reset();
+async function initUserSection() {
+    const tbody = document.getElementById('usersTableBody');
+    if (!tbody) return;
 
-    // Agregar evento submit
-    form.addEventListener('submit', handleTicketSubmit);
-}
+    // 1. Obtener usuarios de DB
+    const users = await DB.get('users');
+    tbody.innerHTML = '';
 
-function handleTicketSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-
-    const newTicket = {
-        id: tickets.length + 1,
-        requesterName: document.getElementById('requesterName').value,
-        email: document.getElementById('email').value,
-        subject: document.getElementById('subject').value,
-        priority: document.getElementById('priority').value,
-        status: document.getElementById('status').value,
-        tags: document.getElementById('tags').value,
-        description: document.getElementById('description').value,
-        created: new Date().toLocaleString()
-    };
-
-    tickets.push(newTicket);
-
-    // Volver a ticket details y refrescar
-    mostrarSeccion('ticket');
-}
-
-// ────────────────────────────────────────────────
-// FUNCIONES PARA TICKET DETAILS
-// ────────────────────────────────────────────────
-function renderTickets() {
-    const ticketsTable = document.getElementById('tickets-table');
-    if (!ticketsTable) return;
-
-    ticketsTable.innerHTML = '';
-
-    tickets.forEach(ticket => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${ticket.id}</td>
-            <td>${ticket.subject}</td>
-            <td>${ticket.requesterName}</td>
-            <td>${ticket.priority}</td>
-            <td><span class="badge bg-${ticket.status === 'Open' ? 'warning' : ticket.status === 'In Progress' ? 'info' : ticket.status === 'Resolved' ? 'success' : 'danger'}">${ticket.status}</span></td>
-            <td>${ticket.created}</td>
+    // 2. Renderizar filas
+    users.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><i class="bi ${u.avatar || 'bi-person-circle'} fs-3 text-secondary"></i></td>
             <td>
-                <button class="action-btn view-ticket" data-id="${ticket.id}" title="View"><i class="bi bi-eye"></i></button>
-                <button class="action-btn delete-ticket" data-id="${ticket.id}" title="Delete"><i class="bi bi-trash"></i></button>
+                <div class="fw-bold">${u.name}</div>
+                <div class="small text-muted">@${u.username}</div>
+            </td>
+            <td>
+                <span class="badge ${u.role === 'admin' ? 'bg-danger' : 'bg-primary'}">${u.role.toUpperCase()}</span>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-outline-warning" onclick="setupEditUser(${u.id})"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteUserAction(${u.id})"><i class="bi bi-trash"></i></button>
             </td>
         `;
-        ticketsTable.appendChild(row);
+        tbody.appendChild(tr);
     });
+}
 
-    // Inicializar acciones
-    document.querySelectorAll('.view-ticket').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const ticketId = parseInt(btn.dataset.id);
-            // Aquí puedes expandir para mostrar detalles completos, por ahora solo console
-            console.log('View ticket:', tickets.find(t => t.id === ticketId));
-        });
-    });
+async function editUser(id) {
+    const users = await DB.get('users');
+    const u = users.find(x => x.id == id);
+    document.getElementById('userId').value = u.id;
+    document.getElementById('userName').value = u.name;
+    document.getElementById('userLogin').value = u.username;
+    document.getElementById('userPass').value = u.pass;
+    document.getElementById('userRole').value = u.role;
+    document.getElementById('modal-usuario').classList.remove('hidden');
+}
 
-    document.querySelectorAll('.delete-ticket').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const ticketId = parseInt(btn.dataset.id);
-            if (confirm('¿Estás seguro de eliminar este ticket?')) {
-                tickets = tickets.filter(t => t.id !== ticketId);
-                renderTickets();
+// Abrir Modal de Usuario (Vacío o con Datos)
+function abrirModalUsuario() {
+    document.getElementById('userForm').reset();
+    document.getElementById('userId').value = '';
+    const modal = document.getElementById('modal-usuario');
+    modal.classList.remove('hidden');
+}
+
+function cerrarModal(id) {
+    document.getElementById(id).classList.add('hidden');
+}
+
+// Preparar edición de usuario
+async function setupEditUser(id) {
+    const users = await DB.get('users');
+    const u = users.find(user => user.id == id);
+    if(u) {
+        document.getElementById('userId').value = u.id;
+        document.getElementById('userName').value = u.name;
+        document.getElementById('userLogin').value = u.username;
+        document.getElementById('userPass').value = u.pass;
+        document.getElementById('userRole').value = u.role;
+        
+        const modal = document.getElementById('modal-usuario');
+        modal.classList.remove('hidden');
+    }
+}
+
+// Acción de borrado
+async function deleteUserAction(id) {
+    if(confirm('¿Eliminar usuario permanentemente?')) {
+        await DB.delete('users', id);
+        initUserSection(); // Refrescar tabla
+    }
+}
+
+// Event Listener para el Formulario de Usuarios (SOLO UNA VEZ)
+const userForm = document.getElementById('userForm');
+if(userForm) {
+    const newForm = userForm.cloneNode(true);
+    userForm.parentNode.replaceChild(newForm, userForm);
+
+    newForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const id = document.getElementById('userId').value;
+        const data = {
+            name: document.getElementById('userName').value,
+            username: document.getElementById('userLogin').value,
+            pass: document.getElementById('userPass').value,
+            role: document.getElementById('userRole').value,
+            avatar: 'bi-person-circle'
+        };
+
+        if(id) {
+            await DB.update('users', id, data);
+        } else {
+            try {
+                await DB.register(data.name, data.username, data.pass, data.role);
+            } catch(err) {
+                alert(err.message);
+                return;
             }
-        });
+        }
+        
+        cerrarModal('modal-usuario');
+        initUserSection(); // Refrescar tabla
     });
 }
 
-// ────────────────────────────────────────────────
-// INICIALIZACIÓN
-// ────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Dashboard QUASAR inicializado');
+// ════════════════════════════════════════════════════════════════════════════════
+// FIN DE LÓGICA DE USUARIOS (NUEVO CRUD)
+// ════════════════════════════════════════════════════════════════════════════════
 
-    // Inicializar funcionalidades
-    initSidebarToggle();
-    initSubmenus();
-    initLogout();
-    initListingSection();
 
-    // Mostrar sección por defecto (dashboard)
-    mostrarSeccion('dashboard');
+// ════════════════════════════════════════════════════════════════════════════════
+// LÓGICA DE TICKETS (Mantener existente)
+// ════════════════════════════════════════════════════════════════════════════════
+let tickets = []; // Local array simulation for tickets
 
-    // Ajustar margen inicial del contenido
-    updateMainContentMargin();
-});
-
-// ────────────────────────────────────────────────
-// FUNCIONES AUXILIARES
-// ────────────────────────────────────────────────
-
-// Ejemplo: función para cargar datos del dashboard
-function loadDashboardData() {
-    // Aquí irían llamadas a tu API
-    // fetch('/api/dashboard-stats')
-    //     .then(res => res.json())
-    //     .then(data => updateDashboardUI(data));
+function initNewTicketForm() {
+    const form = document.getElementById('ticket-form');
+    if(!form) return;
+    form.reset();
+    // Remover listener anterior
+    const newForm = form.cloneNode(true);
+    form.parentNode.replaceChild(newForm, form);
+    
+    newForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newTicket = {
+            id: tickets.length + 1,
+            subject: document.getElementById('subject').value,
+            requesterName: document.getElementById('requesterName').value,
+            priority: document.getElementById('priority').value,
+            status: document.getElementById('status').value,
+            created: new Date().toLocaleDateString()
+        };
+        tickets.push(newTicket);
+        mostrarSeccion('ticket');
+    });
 }
 
-// Ejemplo: actualizar métricas del dashboard
-function updateDashboardMetrics(data) {
-    // Actualizar valores dinámicamente
-    // document.querySelector('.total-users').textContent = data.users;
-    // document.querySelector('.total-sales').textContent = data.sales;
+function renderTickets() {
+    const tbody = document.getElementById('tickets-table');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    tickets.forEach(t => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${t.id}</td><td>${t.subject}</td><td>${t.requesterName}</td>
+            <td>${t.priority}</td><td><span class="badge bg-info">${t.status}</span></td>
+            <td>${t.created}</td><td><button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button></td>
+        `;
+        tbody.appendChild(row);
+    });
 }
