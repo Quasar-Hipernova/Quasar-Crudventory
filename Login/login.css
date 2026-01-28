@@ -1,0 +1,452 @@
+:root {
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 70px;
+    --topbar-height: 60px;
+    --primary: #FF8C00;
+    --secondary: #FFD700;
+    --bg-dark: #000000;
+    --bg-card: #1a1a1a;
+    --text-light: #FFFFFF;
+    --text-muted: #999999;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONTENEDOR DE LOGIN
+   ════════════════════════════════════════════════════════════════ */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    background: radial-gradient(circle at center, #3E2723 0%, #1a1a1a 50%, #000 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de estrellas animadas */
+.login-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(2px 2px at 90% 60%, white, transparent),
+        radial-gradient(1px 1px at 33% 80%, white, transparent);
+    background-size: 200% 200%;
+    animation: twinkle 5s ease-in-out infinite;
+    opacity: 0.3;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CAJA DE LOGIN
+   ════════════════════════════════════════════════════════════════ */
+.login-box {
+    background: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    border: 2px solid var(--secondary);
+    box-shadow: 
+        0 0 30px rgba(255, 140, 0, 0.3),
+        0 0 60px rgba(255, 215, 0, 0.2),
+        inset 0 0 20px rgba(255, 140, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    animation: fadeInScale 0.5s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary), var(--primary));
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0.5;
+    filter: blur(10px);
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TABS DE NAVEGACIÓN
+   ════════════════════════════════════════════════════════════════ */
+.nav-pills .nav-link {
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    transition: all var(--transition-speed);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+}
+
+.nav-pills .nav-link:hover {
+    color: var(--text-light);
+    background: rgba(255, 140, 0, 0.2);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.nav-pills .nav-link.active {
+    color: var(--bg-dark);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-color: var(--secondary);
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FORMULARIOS
+   ════════════════════════════════════════════════════════════════ */
+.form-label {
+    color: var(--secondary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: var(--text-light);
+    padding: 0.75rem 1rem;
+    transition: all var(--transition-speed);
+    border-radius: 6px;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.form-control:focus {
+    background: rgba(0, 0, 0, 0.7);
+    border-color: var(--secondary);
+    color: var(--text-light);
+    box-shadow: 
+        0 0 0 0.2rem rgba(255, 215, 0, 0.2),
+        0 0 15px rgba(255, 140, 0, 0.3);
+    outline: none;
+}
+
+.form-control:hover {
+    border-color: var(--primary);
+}
+
+.form-text {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   BOTONES
+   ════════════════════════════════════════════════════════════════ */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), #e67e00);
+    border: none;
+    color: var(--text-light);
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    transition: all var(--transition-speed);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #e67e00, var(--primary));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.5);
+    color: var(--text-light);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(255, 140, 0, 0.4);
+}
+
+.btn-primary:disabled {
+    background: #555;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-outline-light {
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    transition: all var(--transition-speed);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: transparent;
+}
+
+.btn-outline-light:hover {
+    background: var(--secondary);
+    color: var(--bg-dark);
+    border-color: var(--secondary);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+.btn-outline-light:active {
+    transform: translateY(-1px);
+}
+
+.btn-outline-light:disabled {
+    border-color: #555;
+    color: #555;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Spinner de carga */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15rem;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MENSAJES DE ALERTA
+   ════════════════════════════════════════════════════════════════ */
+#alertMsg {
+    min-height: 20px;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-radius: 6px;
+    animation: slideDown 0.3s ease-out;
+    transition: all var(--transition-speed);
+}
+
+#alertMsg:not(:empty) {
+    padding: 0.75rem;
+    margin-top: 1rem;
+}
+
+.text-danger {
+    color: var(--danger) !important;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.text-success {
+    color: var(--success) !important;
+    background: rgba(40, 167, 69, 0.1);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.text-warning {
+    color: var(--warning) !important;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   INFORMACIÓN DE DEMO
+   ════════════════════════════════════════════════════════════════ */
+.demo-info {
+    background: rgba(255, 140, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+}
+
+.demo-info code {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: var(--secondary);
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    display: inline-block;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ENLACES
+   ════════════════════════════════════════════════════════════════ */
+a {
+    text-decoration: none;
+    transition: all var(--transition-speed);
+}
+
+a.text-warning {
+    color: var(--secondary) !important;
+    font-weight: 600;
+}
+
+a.text-warning:hover {
+    color: var(--primary) !important;
+    text-decoration: underline;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ICONOS
+   ════════════════════════════════════════════════════════════════ */
+.bi {
+    vertical-align: middle;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 576px) {
+    .login-box {
+        padding: 1.5rem;
+        max-width: 95%;
+    }
+
+    .login-box h2 {
+        font-size: 1.5rem;
+    }
+
+    .nav-pills .nav-link {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .btn-primary,
+    .btn-outline-light {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        padding: 0.65rem 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .demo-info {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .login-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .login-box {
+        padding: 1rem;
+    }
+
+    .demo-info .row {
+        flex-direction: column;
+    }
+
+    .demo-info .col-6 {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANIMACIONES ADICIONALES
+   ════════════════════════════════════════════════════════════════ */
+.tab-pane {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   UTILIDADES
+   ════════════════════════════════════════════════════════════════ */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.small {
+    font-size: 0.875rem;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
