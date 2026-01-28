@@ -1,0 +1,546 @@
+/* ════════════════════════════════════════════════════════════════
+   VARIABLES DE COLOR
+   ════════════════════════════════════════════════════════════════ */
+:root {
+    --primary-blue: #1E9BEF;
+    --hover-blue: #0d6efd;
+    --bg-gray: #f8f9fa;
+    --text-dark: #333;
+    --text-muted: #6c757d;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --white: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-gray);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   NAVBAR
+   ════════════════════════════════════════════════════════════════ */
+.navbar {
+    transition: var(--transition);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+.logo-text {
+    background: linear-gradient(135deg, var(--primary-blue), var(--hover-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-link {
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-blue);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: var(--primary-blue) !important;
+}
+
+/* Carrito de compras */
+.btn.position-relative:hover {
+    transform: scale(1.1);
+    transition: var(--transition);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HERO SECTION
+   ════════════════════════════════════════════════════════════════ */
+.hero-section {
+    padding: 80px 0;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background-size: cover;
+    opacity: 0.3;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section img {
+    animation: floatImage 3s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.hero-section .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CATEGORÍAS CIRCULARES
+   ════════════════════════════════════════════════════════════════ */
+.category-item {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.cat-circle {
+    width: 85px;
+    height: 85px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    transition: var(--transition);
+    border: 2px solid #eee;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-item:hover .cat-circle {
+    transform: translateY(-10px) scale(1.1);
+    box-shadow: 0 15px 30px rgba(30, 155, 239, 0.3);
+    border-color: var(--primary-blue);
+    background: linear-gradient(135deg, var(--white), #f0f8ff);
+}
+
+.category-item h6 {
+    transition: var(--transition);
+}
+
+.category-item:hover h6 {
+    color: var(--primary-blue);
+    transform: scale(1.05);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TARJETAS DE PRODUCTO
+   ════════════════════════════════════════════════════════════════ */
+.product-card {
+    border: none;
+    border-radius: 15px;
+    transition: var(--transition);
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(30, 155, 239, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.product-card:hover::before {
+    left: 100%;
+}
+
+.product-card:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-10px);
+    border: 2px solid var(--primary-blue);
+}
+
+.product-card img {
+    height: 180px;
+    object-fit: contain;
+    padding: 15px;
+    border-radius: 15px 15px 0 0;
+    transition: var(--transition);
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    min-height: 40px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 10px;
+    transition: var(--transition);
+}
+
+.product-card:hover .card-title {
+    color: var(--primary-blue);
+}
+
+/* Badge de descuento */
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--danger);
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PRECIOS
+   ════════════════════════════════════════════════════════════════ */
+.text-decoration-line-through {
+    font-size: 0.85rem;
+    color: var(--text-muted) !important;
+}
+
+.price-tag {
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   BOTONES
+   ════════════════════════════════════════════════════════════════ */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--hover-blue));
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(30, 155, 239, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--hover-blue), var(--primary-blue));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(13, 110, 253, 0.4);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-blue);
+    color: var(--primary-blue);
+    transition: var(--transition);
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-blue);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CARRUSEL
+   ════════════════════════════════════════════════════════════════ */
+.carousel-control-prev, .carousel-control-next {
+    width: 5%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.carousel:hover .carousel-control-prev,
+.carousel:hover .carousel-control-next {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    width: 45px;
+    height: 45px;
+    background-size: 50%;
+    filter: invert(1);
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    transform: scale(1.2);
+    background-color: var(--primary-blue);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CARRITO OFFCANVAS
+   ════════════════════════════════════════════════════════════════ */
+.offcanvas {
+    width: 400px !important;
+}
+
+.cart-item {
+    background: var(--bg-gray);
+    transition: var(--transition);
+}
+
+.cart-item:hover {
+    background: #e9ecef;
+    transform: translateX(-5px);
+}
+
+.cart-summary {
+    position: sticky;
+    bottom: 0;
+    background: var(--white);
+    padding: 1rem;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════════════════════════════ */
+footer {
+    border-top: 5px solid var(--primary-blue);
+    background: linear-gradient(135deg, #212529 0%, #000000 100%);
+}
+
+.social-link {
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.social-link:hover {
+    transform: translateY(-5px) scale(1.2);
+    color: var(--primary-blue) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SCROLL TO TOP
+   ════════════════════════════════════════════════════════════════ */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    transition: var(--transition);
+}
+
+#scrollTopBtn:hover {
+    transform: scale(1.2) rotate(360deg);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TOAST NOTIFICATIONS
+   ════════════════════════════════════════════════════════════════ */
+.toast {
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   LOADING SPINNER
+   ════════════════════════════════════════════════════════════════ */
+.spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-width: 0.2em;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+    .hero-section {
+        padding: 40px 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+    
+    .navbar-collapse {
+        background: var(--white);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .offcanvas {
+        width: 100% !important;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cat-circle {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+    
+    .product-card img {
+        height: 150px;
+    }
+    
+    .carousel-control-prev, .carousel-control-next {
+        width: 10%;
+    }
+    
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+        width: 35px;
+        height: 35px;
+    }
+    
+    #scrollTopBtn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero-section .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .cat-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.3rem;
+    }
+    
+    .product-card img {
+        height: 120px;
+    }
+    
+    .card-title {
+        font-size: 0.85rem;
+        min-height: 35px;
+    }
+    
+    h4 {
+        font-size: 1.25rem;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANIMACIONES ADICIONALES
+   ════════════════════════════════════════════════════════════════ */
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   UTILIDADES
+   ════════════════════════════════════════════════════════════════ */
+.text-primary {
+    color: var(--primary-blue) !important;
+}
+
+.bg-primary {
+    background: var(--primary-blue) !important;
+}
+
+.border-primary {
+    border-color: var(--primary-blue) !important;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-blue);
+}
